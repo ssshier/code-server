@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: code-server-{{ .Values.user }}
+  namespace: {{ .Values.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+    - hosts:
+        - code-{{ .Values.user }}.dev.center
+      secretName: tls-wildcard-dev-center
+  rules:
+    - host: code-{{ .Values.user }}.dev.center
+      http:
+        paths:
+          - backend:
+              serviceName: code-server-{{ .Values.user }}
+              servicePort: 80
+            path: /

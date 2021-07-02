@@ -1,0 +1,9 @@
+apiVersion: v2
+name: code-server
+description: A Web-IDE for Kubernetes
+version: 0.1.0
+keyword:
+  - code-server
+home: https://github.com/gashirar/code-server-on-kubernetes
+maitainers:
+  - name: gashirar

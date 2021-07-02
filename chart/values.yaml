@@ -1,0 +1,10 @@
+# Kubernetes namespace
+namespace: "dev"
+# Basic Authentication Username
+user: "user"
+# Basic Authentication Password
+password: "P@ssw0rd"
+# Image
+image: "ssshier/code-server:3.10.2"
+# Persistance
+persistance: "true"

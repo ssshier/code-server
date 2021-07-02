@@ -1,0 +1,8 @@
+version: "3"
+services:
+  code-server:
+    container_name: "code-server"
+    build: .
+    image: "ssshier/code-server:3.10.2"
+    ports:
+      - "8080:8080"

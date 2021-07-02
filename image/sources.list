@@ -1,0 +1,5 @@
+deb http://repo.huaweicloud.com/ bionic main restricted universe multiverse 
+deb http://repo.huaweicloud.com/ bionic-security main restricted universe multiverse 
+deb http://repo.huaweicloud.com/ bionic-updates main restricted universe multiverse 
+deb http://repo.huaweicloud.com/ bionic-proposed main restricted universe multiverse 
+deb http://repo.huaweicloud.com/ bionic-backports main restricted universe multiverse

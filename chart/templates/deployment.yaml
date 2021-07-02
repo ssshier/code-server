@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-server-{{ .Values.user }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: code-server-{{ .Values.user }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: code-server-{{ .Values.user }}
+    spec:
+      serviceAccountName: code-server-{{ .Values.user }}
+      automountServiceAccountToken: true
+      {{ if eq .Values.persistance "true" }}
+      volumes:
+        - name: coder-server-{{ .Values.user }}
+          persistentVolumeClaim:
+            claimName: coder-server-{{ .Values.user }}
+      {{ end }}
+      containers:
+        - name: code-server
+          image: {{ .Values.image }}
+          ports:
+            - containerPort: 8080
+              name: code-server
+          {{ if eq .Values.persistance "true" }}
+          volumeMounts:
+            - mountPath: "/home/coder/workspace"
+              subPath: 'workspace'
+              name: coder-server-{{ .Values.user }}
+          {{ end }}
+          securityContext:
+            privileged: true
+            # runAsUser: 0
+          env:
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: code-server-{{ .Values.user }}
+                  key: password
+          resources:
+            limits:
+              memory: 700Mi
+              cpu: 300m
+            requests:
+              memory: 300Mi
+              cpu: 50m
