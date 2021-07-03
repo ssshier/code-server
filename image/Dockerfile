@@ -1,5 +1,12 @@
 FROM ubuntu:20.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+
+# RUN apt-get update && apt-get install -y apt-transport-https ca-certificates
+
+RUN sed -i "s@http://.*archive.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list
+RUN sed -i "s@http://.*security.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list
+
 RUN apt-get update && apt-get install -y \
     openssl \
     net-tools \
@@ -81,7 +88,7 @@ COPY requirements.txt /home/coder/.local/requirements.txt
 
 COPY ./.pip ~/.pip
 
-RUN /usr/bin/python3 -m pip install -U pip setuptools
+RUN /usr/bin/python3 -m pip install -U pip setuptools -i https://repo.huaweicloud.com/repository/pypi/simple --trusted-host repo.huaweicloud.com
 
 RUN /usr/bin/python3 -m pip install -r /home/coder/.local/requirements.txt
 
